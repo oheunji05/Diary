@@ -1,0 +1,8 @@
+.App {
+  text-align: center;
+}
+
+@font-face {
+  font-family: "Jua-Regular";         
+  src: url("./font/Jua-Regular.ttf"); 
+}
