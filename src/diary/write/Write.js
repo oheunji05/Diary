@@ -32,27 +32,14 @@ function Write(){
                 <W.SubBox>
                     <W.Input className='input_title' placeholder='제목' onChange={(e)=>{setTitle(e.target.value)}}></W.Input>
                     <W.Input className='input_content' type="date" onChange={(e)=>{setDate(e.target.value)}}></W.Input>
-                    {/* <W.Input className='input_content' placeholder='날씨' onChange={(e)=>{setWeather(e.target.value)}}></W.Input> */}
                     <br></br>
-                    
-                    {/* <W.WeatherButton onClick={()=>{setWeather("맑음");}}>맑음</W.WeatherButton>
-                    <W.WeatherButton onClick={()=>{setWeather("흐림");}}>흐림</W.WeatherButton>
-                    <W.WeatherButton onClick={()=>{setWeather("비");}}>비</W.WeatherButton>
-                    <W.WeatherButton onClick={()=>{setWeather("눈");}}>눈</W.WeatherButton> */}
 
-                    <W.WeatherButton onClick={()=>setSelected("맑음")} className={selected === "맑음" && "selected"}>맑음</W.WeatherButton>
-                    <W.WeatherButton onClick={()=>setSelected("흐림")} className={selected === "흐림" && "selected"}>흐림</W.WeatherButton>
-                    <W.WeatherButton onClick={()=>setSelected("비")} className={selected === "비" && "selected"}>비</W.WeatherButton>
-                    <W.WeatherButton onClick={()=>setSelected("눈")} className={selected === "눈" && "selected"}>눈</W.WeatherButton>
+                    <W.WeatherButton isSelected={selected === "맑음"} onClick={()=>setSelected("맑음")} >맑음</W.WeatherButton>
+                    <W.WeatherButton isSelected={selected === "흐림"} onClick={()=>setSelected("흐림")} >흐림</W.WeatherButton>
+                    <W.WeatherButton isSelected={selected === "비"} onClick={()=>setSelected("비")} >비</W.WeatherButton>
+                    <W.WeatherButton isSelected={selected === "눈"} onClick={()=>setSelected("눈")} >눈</W.WeatherButton>
                     
                     <W.Input_Text className='input_content' placeholder='글' onChange={(e)=>{setContent(e.target.value)}}></W.Input_Text>
-
-                    {/* <W.Button onClick={()=>{
-                        axios.post(`${Server.server}/post/${localStorage.getItem("userName")}`,{title:title, date:date, weather:weather, content:content})
-                        .then((result)=>{console.log(result)})
-                        .catch(()=>{});
-                        navigate('/list')
-                    }}>작성하기</W.Button> */}
 
                     <W.Button onClick={()=>{
                         axios.post(`${Server.server}/post/${localStorage.getItem("userName")}`,{title:title, date:date, weather:selected, content:content})

@@ -18,6 +18,7 @@ function App() {
   let [date, setDate] = useState([])
   let [content, setContent] = useState([])
   let [weather, setWeather] = useState([])
+  let [post_id, setPost_id] = useState()
 
   useEffect(()=>{
     console.log(userName)
@@ -34,9 +35,9 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
         <Route path='/write' element={<Write></Write>}></Route>
-        <Route path='/list' element={<List setUserName={setUserName} setTitle={setTitle} setDate={setDate} setContent={setContent} setWeather={setWeather}></List>}></Route>
-        <Route path='/detail' element={<Detail userName={userName} title={title} date={date} content={content} weather={weather}></Detail>}></Route>
-        <Route path='/update' element={<Update userName={userName} title={title} date={date} content={content} weather={weather}></Update>}></Route>
+        <Route path='/list' element={<List setUserName={setUserName} setTitle={setTitle} setDate={setDate} setContent={setContent} setWeather={setWeather} setPost_id={setPost_id}></List>}></Route>
+        <Route path='/detail' element={<Detail userName={userName} title={title} date={date} content={content} weather={weather} post_id={post_id}></Detail>}></Route>
+        <Route path='/update' element={<Update userName={userName} title={title} date={date} content={content} weather={weather} post_id={post_id}></Update>}></Route>
       </Routes>
 
     </div>

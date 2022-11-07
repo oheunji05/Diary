@@ -38,7 +38,7 @@ function Update({userName, title, date, content, weather}){
                     <U.Input_Text value={content} ></U.Input_Text>
 
                     <U.Button onClick={()=>{
-                        axios.post(`${Server.server}/post/${localStorage.getItem("userName")}`,{title:title, content:content})
+                        axios.post(`${Server.server}/post/${localStorage.getItem("post_id")}`,{title:title, content:content})
                         .then((result)=>{})
                         .catch(()=>{});
                         navigate('/list')

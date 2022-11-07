@@ -43,6 +43,8 @@ export const Input = styled.input`
 `
 
 export const WeatherButton = styled.button`
+    background-color:${(props) => props.isSelected ? "#C2EDFF" : "white"};
+
     width: 80px;
     height: 40px;
     border-radius: 25px;
@@ -54,13 +56,12 @@ export const WeatherButton = styled.button`
     margin-right: 21px;
     font-size: 17px;
     font-family: 'Jua-Regular';
-    background-color: white;
-    &:focus{  
+    /* &:focus{  
         background-color : #C2EDFF;
     }
     &:visited{
         background-color : #FFD43D;
-    }
+    } */
 `
 
 export const Input_Text = styled.textarea`

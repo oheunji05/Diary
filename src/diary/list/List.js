@@ -22,7 +22,6 @@ function List({setUserName, setTitle, setDate, setContent, setWeather}){
             .then((data) => {
                 console.log('데이터' + JSON.stringify(data.data))
                 setList(data.data.list);
-            
             })
             .catch(() => {})
     }
