@@ -14,8 +14,8 @@ export const NavHead = styled.div`
 export const Img = styled.img`
     width: 140px;
     height: 140px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 10px;
 `
 
 export const Button = styled.button`

@@ -1,16 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Routes, Route, Link, useNavigate} from 'react-router-dom';
 
 import axios from 'axios';
 
 import * as D from './Datail.styled.js';
 import '../diary.css';
 
-function Datail({userName, title, date, content, weather}){
+import Server from '../../config/server.json';
+
+import { useRecoilState } from 'recoil';
+import { contentState, dateState, post_idState, titleState, userNameState, weatherState } from '../../store/atom.js';
+
+function Datail(){
+
+    let [userName, setUserName] = useRecoilState(userNameState)
+    let [title, setTitle] = useRecoilState(titleState)
+    let [date, setDate] = useRecoilState(dateState)
+    let [content, setContent] = useRecoilState(contentState)
+    let [weather, setWeather] = useRecoilState(weatherState)
+    let [post_id, setPost_id] = useRecoilState(post_idState)
 
     useEffect(()=>{
-        console.log(userName + " " + title + " " + date + " " + content + " " + weather)
-    },[userName, title, date, content, weather])
+        axios.get(`${Server.server}/post/`)
+        .then((data)=>{console.log(data.list.postId)})
+        .catch(()=>{})
+    })
 
     let navigate = useNavigate();
 

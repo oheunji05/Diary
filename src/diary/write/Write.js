@@ -1,33 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { contentState, dateState, post_idState, titleState, userNameState, weatherState } from '../../store/atom.js';
+
 import axios from 'axios';
 
 import * as W from './Write.styled.js';
 import '../diary.css';
 
+import { useRecoilState } from 'recoil'
+
 import Server from '../../config/server.json';
 
 function Write(){
 
-    let [title, setTitle] = useState();
-    let [date, setDate] = useState();
-    let [weather, setWeather] = useState();
-    let [content, setContent] = useState();
+    let [userName, setUserName] = useRecoilState(userNameState)
+    let [title, setTitle] = useRecoilState(titleState)
+    let [date, setDate] = useRecoilState(dateState)
+    let [content, setContent] = useRecoilState(contentState)
+    let [weather, setWeather] = useRecoilState(weatherState)
+    let [post_id, setPost_id] = useRecoilState(post_idState)
 
     let navigate = useNavigate();
 
     const [selected, setSelected] = useState("");
 
-    useEffect(() => {
-        console.log(selected);
-      }, [selected]);
-
     return(
         <div className='background'>
             <W.Box>
-
-            {/* <W.Title>일기</W.Title> */}
 
                 <W.SubBox>
                     <W.Input className='input_title' placeholder='제목' onChange={(e)=>{setTitle(e.target.value)}}></W.Input>

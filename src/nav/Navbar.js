@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
 const ignore = [
-    "/","/login", "/register","/main"
+    "/","/login", "/register"
 ]
 
 function Navbar(){
@@ -39,7 +39,7 @@ function Navbar(){
                     }}><N.Search_Icon src={Search}></N.Search_Icon></N.Search_Button> */}
                 </N.Seach_Part>
 
-                <N.Button onClick={()=>{navigate('/')}}><N.Icon src={Home}></N.Icon>메인페이지</N.Button>
+                <N.Button onClick={()=>{navigate('/main')}}><N.Icon src={Home}></N.Icon>메인페이지</N.Button>
                 <N.Button onClick={()=>{navigate('/write')}}><N.Icon src={Write}></N.Icon>일기 작성</N.Button>
                 <N.Button onClick={()=>{navigate('/list')}}><N.Icon src={List}></N.Icon>일기 목록</N.Button>
 
