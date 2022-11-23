@@ -1,67 +1,60 @@
-import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import * as L from './List.styled.js';
-import '../diary.css';
+import * as L from "./List.styled.js";
+import "../diary.css";
+import Server from "../../config/server.json";
 
-import { useRecoilState } from 'recoil';
-import { contentState, dateState, post_idState, titleState, userNameState, weatherState } from '../../store/atom.js';
+function List() {
+  const location = useLocation();
+  let [list, setList] = useState([]);
 
-import Server from '../../config/server.json';
+  let [userName, setUserName] = useState("");
+  let [title, setTitle] = useState("");
+  let [date, setDate] = useState("");
+  let [content, setContent] = useState("");
+  let [weather, setWeather] = useState("");
+  let [post_id, setPost_id] = useState("");
 
-function List(){
+  let navigate = useNavigate();
 
-    let [list, setList] = useState([]);
+  const ax = ()=>{
+    axios.get(`${Server.server}/post/`)
+      .then((data) => {
+        setList(data.data.list);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-    let [userName, setUserName] = useRecoilState(userNameState)
-    let [title, setTitle] = useRecoilState(titleState)
-    let [date, setDate] = useRecoilState(dateState)
-    let [content, setContent] = useRecoilState(contentState)
-    let [weather, setWeather] = useRecoilState(weatherState)
-    let [post_id, setPost_id] = useRecoilState(post_idState)
+  useEffect(() => {
+    ax()
+  }, [location]);
 
-    let navigate = useNavigate();
+  return (
+    <L.Main className="background">
+      <L.ListBoxPart>
+        {
+          list.map((element, index) => {
+            return (
+              <L.ListBox onClick={() => {setUserName(element.userName); setTitle(element.title); setDate(element.date); setContent(element.content); setWeather(element.weather); navigate(`/detail/${element.postId}`);}}>
+                <L.ListTitle_Date>
+                  <L.ListTitle>{element.title}</L.ListTitle>
+                  <L.ListDate>{element.date}</L.ListDate>
+                </L.ListTitle_Date>
 
-    useEffect(()=>{
-        loadPage(1)
-    },[])
+                <L.ListContent>{element.content}</L.ListContent>
 
-    let loadPage = (page) => {
-        axios.get(`${Server.server}/post/`)
-            .then((data) => {
-                console.log('데이터' + JSON.stringify(data.data))
-                setList(data.data.list);
-            })
-            .catch(() => {})
-    }
-
-    return(
-        <L.Main className='background'>
-
-            {console.log(list)}
-            <L.ListBoxPart>
-                {
-                    list.map((element,index)=>{
-                        
-                        return(
-                            <L.ListBox onClick={()=>{console.log(element); setUserName(element.userName); setTitle(element.title); setDate(element.date); setContent(element.content); setWeather(element.weather); navigate(`/detail/${element.postId}`)}}>
-
-                                <L.ListTitle_Date>
-                                    <L.ListTitle>{element.title}</L.ListTitle>
-                                    <L.ListDate>{element.date}</L.ListDate>
-                                </L.ListTitle_Date>
-
-                                <L.ListContent>{element.content}</L.ListContent>
-
-                                <L.ListWeather>{element.weather}</L.ListWeather>
-                            </L.ListBox>
-                        )
-                    })
-                }
-            </L.ListBoxPart>
-        </L.Main>
-    )
+                <L.ListWeather>{element.weather}</L.ListWeather>
+              </L.ListBox>
+            );
+          })
+        }
+      </L.ListBoxPart>
+    </L.Main>
+  );
 }
 
-export default List
+export default List;

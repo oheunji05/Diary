@@ -1,49 +1,62 @@
-import React, {useEffect, useState} from 'react';
-import {Routes, Route, Link, useNavigate} from 'react-router-dom';
+import React, { useEffect, useState, useLayoutEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
-import axios from 'axios';
+import * as D from "./Datail.styled.js";
+import "../diary.css";
+import Server from "../../config/server.json";
 
-import * as D from './Datail.styled.js';
-import '../diary.css';
+const Datail = () => {
+  const location = useLocation();
+  let navigate = useNavigate();
 
-import Server from '../../config/server.json';
+  let [title, setTitle] = useState("");
+  let [date, setDate] = useState("");
+  let [content, setContent] = useState("");
+  let [weather, setWeather] = useState("");
 
-import { useRecoilState } from 'recoil';
-import { contentState, dateState, post_idState, titleState, userNameState, weatherState } from '../../store/atom.js';
+  const postId = location.pathname.split("/")[2];
 
-function Datail(){
+  useLayoutEffect(() => {
+    axios.get(`${Server.server}/post/${postId}`)
+      .then((data) => {
+        console.log(data.data);
 
-    let [userName, setUserName] = useRecoilState(userNameState)
-    let [title, setTitle] = useRecoilState(titleState)
-    let [date, setDate] = useRecoilState(dateState)
-    let [content, setContent] = useRecoilState(contentState)
-    let [weather, setWeather] = useRecoilState(weatherState)
-    let [post_id, setPost_id] = useRecoilState(post_idState)
+        const d = data.data;
+        setTitle(d.title);
+        setDate(d.date);
+        setContent(d.content);
+        setWeather(d.weather);
+      })
+      .catch((error) => {console.log(error);});
+  }, [location]);
 
-    useEffect(()=>{
-        axios.get(`${Server.server}/post/`)
-        .then((data)=>{console.log(data.list.postId)})
-        .catch(()=>{})
-    })
+  const deletePost = () => {
+    axios.delete(`${Server.server}/post/${postId}`)
+      .then(() => {
+        console.log("삭제성공");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    let navigate = useNavigate();
+  return (
+    <div className="background">
+      <D.Box>
+        <D.SubBox>
+          <D.Input value={title}></D.Input>
+          <D.Input value={date}></D.Input>
+          <D.Input value={weather}></D.Input>
 
-    return(
-        <div className='background'>
-            <D.Box>
-                <D.SubBox>
-                    <D.Input value={title} readonly></D.Input>
-                    <D.Input value={date} readonly></D.Input>
-                    <D.Input value={weather} readonly></D.Input>
+          <D.Input_Text value={content}></D.Input_Text>
 
-                    <D.Input_Text value={content} readonly></D.Input_Text>
-
-                    <D.Button onClick={()=>{navigate('/update')}}>일기수정</D.Button>
-                    <D.Button onClick={()=>{navigate('/list')}}>일기삭제</D.Button>
-                </D.SubBox>
-            </D.Box>
-        </div>
-    )
-}
+          <D.Button onClick={() => {navigate(`/update/${postId}`);}}>일기수정</D.Button>
+          <D.Button onClick={() => {deletePost(); navigate("/list");}}>일기삭제</D.Button>
+        </D.SubBox>
+      </D.Box>
+    </div>
+  );
+};
 
 export default Datail;

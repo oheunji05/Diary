@@ -35,7 +35,7 @@ function Register(){
 
                     <br/>
 
-                    <R.Input placeholder="비밀번호를 입력하세요" onChange={(e)=>{
+                    <R.Input type='password' placeholder="비밀번호를 입력하세요" onChange={(e)=>{
                         setPassword(e.target.value)
                     }}></R.Input>
 
@@ -43,7 +43,7 @@ function Register(){
 
                     <R.Button onClick={()=>{
                         axios.post(`${Server.server}/auth/sign-up`,{userName:name, userPassword:password})
-                        .then((result)=>{navigate('/list')})
+                        .then((result)=>{navigate('/login')})
                         .catch((result)=>{alert('회원가입에 실패하였습니다.')})
                     }}>회원가입</R.Button>
 

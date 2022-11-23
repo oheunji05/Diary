@@ -38,7 +38,7 @@ function Login(){
 
                 <br/>
 
-                <L.Input placeholder="비밀번호를 입력하세요" onChange={(e)=>{
+                <L.Input placeholder="비밀번호를 입력하세요" type='password' onChange={(e)=>{
                     setPassword(e.target.value)
                 }}></L.Input>
 
